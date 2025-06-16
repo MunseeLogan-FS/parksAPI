@@ -1,31 +1,20 @@
 {
-  "name": "wdv335_server-side",
+  "name": "apiWithReact",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "engines": {
+    "node": ">=16.10.0"
+  },
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "install-reactjs": "npm install --prefix new-react-parks",
+    "install-api": "npm install --prefix api",
+    "build-react": "npm run build --prefix new-react-parks",
+    "heroku-postbuild": "concurrently \"npm:install-**\"; concurrently \"npm:build-*\"",
+    "start": "npm start --prefix api",
+    "dev:react": "concurrently --raw \"npm run api\" \"npm run react\"",
+    "api": "cd api && node server.js",
+    "react": "cd new-react-parks && npm run dev"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MunseeLogan-FS/Server-Side_Languages.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MunseeLogan-FS/Server-Side_Languages/issues"
-  },
-  "homepage": "https://github.com/MunseeLogan-FS/Server-Side_Languages#readme",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "mongoose": "^8.15.0",
-    "morgan": "^1.10.0",
-    "path": "^0.12.7",
-    "nodemon": "^3.1.10"
+    "concurrently": "^9.1.2"
   }
- 
 }
