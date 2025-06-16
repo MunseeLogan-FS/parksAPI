@@ -67,7 +67,7 @@ router.post("/", async (req, res) => {
     }
     res.status(500).json({
       success: false,
-      message: messages.CREATE_ERROR || "Error creating hero",
+      message: messages.CREATE_ERROR || "Error creating park",
       error: error.message,
     });
   }
