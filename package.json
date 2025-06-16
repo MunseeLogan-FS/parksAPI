@@ -5,7 +5,7 @@
     "node": ">=20.x"
   },
   "scripts": {
-    "install-reactjs": "npm install --prefix new-react-parks",
+    "install-reactjs": "npm install --prefix new-react-parks --include=dev",
     "install-api": "npm install --prefix api",
     "build-react": "npm run build --prefix new-react-parks",
     "heroku-postbuild": "concurrently \"npm:install-*\"; concurrently \"npm:build-*\"; ",
