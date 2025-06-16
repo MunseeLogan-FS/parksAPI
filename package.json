@@ -2,13 +2,13 @@
   "name": "api-with-react",
   "version": "1.0.0",
   "engines": {
-    "node": ">=16.10.0"
+    "node": ">=20.x"
   },
   "scripts": {
     "install-reactjs": "npm install --prefix new-react-parks",
     "install-api": "npm install --prefix api",
     "build-react": "npm run build --prefix new-react-parks",
-    "heroku-postbuild": "concurrently \"npm:install-*\"; concurrently \"npm:build-*\"",
+    "heroku-postbuild": "npm install --prefix new-react-parks && npm run build-react && npm install --prefix api",
     "start": "npm start --prefix api",
     "dev:react": "concurrently --raw \"npm run api\" \"npm run react\"",
     "api": "cd api && node server.js",
