@@ -1,0 +1,18 @@
+GET http://localhost:3001/nationalParks
+
+###
+
+GET http://localhost:3001/nationalParks/68506591fb2c5d2e2f536fe3
+
+###
+POST http://localhost:3001/nationalParks
+Content-Type: application/json
+
+{
+  "park": {
+    "name": "Yellowstone",
+    "location": "Wyoming",
+    "area": 3471,
+    "established": "1872-03-01"
+  }
+}
