@@ -25,7 +25,7 @@ app.use(express.json());
 app.use("/api/v1/nationalParks", nationalParkRouter);
 
 app.use(express.static(path.join(__dirname, "../new-react-parks/dist")));
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../new-react-parks/dist/index.html"));
 });
 
