@@ -8,6 +8,7 @@ const app = express();
 app.use(cors());
 
 const port = process.env.PORT || 3000;
+console.log("__dirname is", __dirname);
 
 const nationalParkRouter = require("./routes/nationalParks");
 
