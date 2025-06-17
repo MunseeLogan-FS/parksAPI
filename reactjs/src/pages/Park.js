@@ -142,7 +142,7 @@ function Park() {
           <label>
             Area:
             <input
-              type="text"
+              type="number"
               name="area"
               value={values.area}
               onChange={handleInputChanges}

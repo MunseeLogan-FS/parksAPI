@@ -19,7 +19,7 @@ function Dashboard() {
       ? `http://localhost:3001/api/v1`
       : process.env.REACT_APP_BASE_URL;
 
-  console.log("API_BASE is", API_BASE);
+  // console.log("API_BASE is", API_BASE);
 
   let ignore = false;
   useEffect(() => {
