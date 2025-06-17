@@ -7,8 +7,7 @@ const path = require("path");
 const app = express();
 app.use(cors());
 
-const port = process.env.PORT || 3000;
-console.log("__dirname is", __dirname);
+const port = process.env.PORT || 3001;
 
 const nationalParkRouter = require("./routes/nationalParks");
 
@@ -25,9 +24,9 @@ db.once("open", () => console.log("Connected to Database"));
 app.use(express.json());
 app.use("/api/v1/nationalParks", nationalParkRouter);
 
-app.use(express.static(path.join(__dirname, "../new-react-parks/dist")));
+app.use(express.static(path.join(__dirname, "../reactjs/build")));
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../new-react-parks/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../reactjs/build", "index.html"));
 });
 
 app.listen(port, () => {
