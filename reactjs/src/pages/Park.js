@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import ParksService from "../services/parks.service";
 
 import "../App.css";
 
@@ -37,18 +38,18 @@ function Park() {
   const getPark = async () => {
     setLoading(true);
     try {
-      await fetch(`${API_BASE}/nationalParks/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log({ data });
-          setParks(data.data);
-          setValues({
-            name: data.data.name,
-            location: data.data.location,
-            area: data.data.area,
-            established: data.data.established,
-          });
-        });
+      await ParksService.getPrivatePark(id).then(
+        (response) => {
+          console.log(response);
+          if (response.data) {
+            setValues(response.data.data);
+          }
+        },
+        (error) => {
+          console.log("Secured page error", error.response);
+          navigate("/signin");
+        }
+      );
     } catch (error) {
       setError(error.message || "Unexpected Error");
     } finally {
@@ -58,14 +59,16 @@ function Park() {
 
   const deletePark = async () => {
     try {
-      await fetch(`${API_BASE}/nationalParks/${id}`, {
-        method: "DELETE",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setParks(data);
-          navigate("/dashboard", { replace: true });
-        });
+      await ParksService.deletePrivatePark(id).then(
+        (response) => {
+          console.log(response);
+          navigate("/dashboard");
+        },
+        (error) => {
+          console.log("Secured page error", error.response);
+          navigate("/signin");
+        }
+      );
     } catch (error) {
       setError(error.message || "Unexpected Error");
     } finally {
@@ -75,17 +78,15 @@ function Park() {
 
   const updatePark = async () => {
     try {
-      await fetch(`${API_BASE}/nationalParks/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      await ParksService.updatePrivatePark(id, values).then(
+        (response) => {
+          console.log(response);
         },
-        body: JSON.stringify(values),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log({ data });
-        });
+        (error) => {
+          console.log("Secured page error", error.response);
+          navigate("/signin");
+        }
+      );
     } catch (error) {
       setError(error.message || "Unexpected Error");
     } finally {

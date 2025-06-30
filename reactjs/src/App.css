@@ -71,7 +71,8 @@ label {
   text-align: left;
   color: #cdd9b0;
 }
-
+input[type="email"],
+input[type="password"],
 input[type="text"],
 input[type="number"] {
   padding: 0.5rem;
@@ -82,7 +83,8 @@ input[type="number"] {
   background-color: rgba(255, 255, 255, 0.15);
   color: #f0f0e8;
 }
-
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
 input[type="text"]::placeholder,
 input[type="number"]::placeholder {
   color: #b0c48c;
