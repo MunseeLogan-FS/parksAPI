@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+
+import AuthService from "../services/auth.service";
+import ParksService from "../services/parks.service";
 
 import "../App.css";
 
@@ -13,23 +16,37 @@ function Dashboard() {
     area: "",
     established: "",
   });
+  const navigate = useNavigate();
 
   const API_BASE =
     process.env.NODE_ENV === "development"
-      ? `http://localhost:3001/api/v1`
+      ? `http://localhost:8000/api/v1`
       : process.env.REACT_APP_BASE_URL;
 
   // console.log("API_BASE is", API_BASE);
 
   let ignore = false;
   useEffect(() => {
-    if (!ignore) {
-      getParks();
-    }
+    ParksService.getAllPrivateParks().then(
+      (response) => {
+        console.log(response);
+        if (!ignore) {
+          setParks(response.data.data);
+        }
+      },
+      (error) => {
+        console.log("Secured page error", error.response);
+        AuthService.logout();
+        navigate("/signin");
+      }
+    );
+    // if (!ignore) {
+    //   getParks();
+    // }
 
-    return () => {
-      ignore = true;
-    };
+    // return () => {
+    //   ignore = true;
+    // };
   }, []);
 
   const getParks = async () => {
@@ -102,6 +119,7 @@ function Dashboard() {
             <input
               type="text"
               name="name"
+              placeholder="e.g. Yellowstone"
               value={values.name}
               onChange={handleInputChanges}
             />
@@ -111,6 +129,7 @@ function Dashboard() {
             <input
               type="text"
               name="location"
+              placeholder="e.g. Wyoming, Montana, Idaho"
               value={values.location}
               onChange={handleInputChanges}
             />
@@ -120,6 +139,7 @@ function Dashboard() {
             <input
               type="number"
               name="area"
+              placeholder="e.g. 2219790"
               value={values.area}
               onChange={handleInputChanges}
             />
@@ -129,6 +149,7 @@ function Dashboard() {
             <input
               type="text"
               name="established"
+              placeholder="e.g. 1978-09-15"
               value={values.established}
               onChange={handleInputChanges}
             />

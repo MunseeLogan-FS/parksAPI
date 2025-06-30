@@ -1,10 +1,16 @@
 const express = require("express");
+
+const passport = require("passport");
+const passportService = require("../services/passport");
+const protectedRoute = passport.authenticate("jwt", { session: false });
+
 const router = express.Router();
 const messages = require("../utils/messages");
 
 const Park = require("../models/Parks");
 
-router.get("/", async (req, res) => {
+router.get("/", protectedRoute, async (req, res) => {
+  // console.log(req.headers);
   try {
     const parks = await Park.find({});
     res.status(200).json({

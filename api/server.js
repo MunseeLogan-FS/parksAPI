@@ -10,6 +10,7 @@ app.use(cors());
 const port = process.env.PORT || 3001;
 
 const nationalParkRouter = require("./routes/nationalParks");
+const authRouter = require("./routes/auth");
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -23,6 +24,7 @@ db.once("open", () => console.log("Connected to Database"));
 
 app.use(express.json());
 app.use("/api/v1/nationalParks", nationalParkRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.use(express.static(path.join(__dirname, "../reactjs/build")));
 app.get("/*", (req, res) => {
