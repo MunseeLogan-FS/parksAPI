@@ -45,36 +45,28 @@ function Dashboard() {
     // }
 
     // return () => {
-    //   ignore = true;
+    // ignore = true;
     // };
   }, []);
-
-  const getParks = async () => {
-    setLoading(true);
-    try {
-      await fetch(`${API_BASE}/nationalParks`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log({ data });
-          setParks(data.data);
-        });
-    } catch (error) {
-      setError(error.message || "Unexpected Error");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const createPark = async () => {
     console.log(JSON.stringify({ parks: values }));
     try {
-      await fetch(`${API_BASE}/nationalParks`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      setLoading(true);
+      await ParksService.postPrivatePark({ park: values });
+
+      setValues({ name: "", location: "", area: "", established: "" });
+      await ParksService.getAllPrivateParks().then(
+        (response) => {
+          console.log(response);
+          setParks(response.data.data);
         },
-        body: JSON.stringify({ park: values }),
-      }).then(() => getParks());
+        (error) => {
+          console.log("Secured page error", error.response);
+          AuthService.logout();
+          navigate("/signin");
+        }
+      );
     } catch (error) {
       setError(error.message || "Unexpected Error");
     } finally {

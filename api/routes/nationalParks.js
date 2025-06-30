@@ -27,7 +27,7 @@ router.get("/", protectedRoute, async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", protectedRoute, async (req, res) => {
   const { id } = req.params;
   try {
     const park = await Park.findById(id);
@@ -51,7 +51,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", protectedRoute, async (req, res) => {
   const { park } = req.body;
   console.log(park);
   try {
@@ -79,7 +79,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", protectedRoute, async (req, res) => {
   const { id } = req.params;
   try {
     const park = await Park.findByIdAndUpdate(id, req.body, {
@@ -106,7 +106,7 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", protectedRoute, async (req, res) => {
   const { id } = req.params;
   try {
     const deletePark = await Park.findByIdAndDelete(id);
